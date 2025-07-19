@@ -21,5 +21,5 @@ Works perfectly with WordPress, Blogger, and WYSIWYG editors
 
 ## Live Demo
 
-[**View Live Demo**](https://yourusername.github.io/code-formatter)  
+[**View Live Demo**](https://code-html-formatter.pages.dev/)  
 
