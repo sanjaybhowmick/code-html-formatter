@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code to HTML Formatter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    textarea {
+      resize: vertical;
+      font-family: monospace;
+      min-height: 120px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 10px;
+      border: none;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .copy-btn {
+      background: #28a745;
+      margin-top: 5px;
+    }
+    .copy-btn:hover {
+      background: #1e7e34;
+    }
+    #output {
+      background: #272822;
+      color: #f8f8f2;
+      font-family: monospace;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Code to HTML Formatter</h2>
+
+    <label for="language">Select Language (for preview only):</label>
+    <select id="language">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="javascript">JavaScript</option>
+      <option value="php">PHP</option>
+      <option value="python">Python</option>
+      <option value="java">Java</option>
+      <option value="csharp">C#</option>
+    </select>
+
+    <label for="codeInput">Paste Your Source Code:</label>
+    <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+
+    <button onclick="formatCode()">Format to HTML</button>
+
+    <label for="output">Formatted HTML (Fully Inline Styles):</label>
+    <textarea id="output" readonly></textarea>
+    <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <h3>Preview:</h3>
+    <pre><code id="preview" style="background:#272822; color:#f8f8f2; display:block; padding:10px; border-radius:5px; overflow-x:auto;"></code></pre>
+  </div>
+
+  <script>
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+
+    function formatCode() {
+      const code = document.getElementById("codeInput").value;
+      const escapedCode = escapeHtml(code);
+
+      // Inlined styles for <pre> and <code>
+      const inlinePreStyle = "background:#272822;color:#f8f8f2;display:block;padding:10px;border-radius:5px;overflow-x:auto;font-family:monospace;font-size:13px;";
+      const inlineCodeStyle = "color:#f8f8f2;";
+
+      const htmlFormatted =
+`<pre style="${inlinePreStyle}"><code style="${inlineCodeStyle}">${escapedCode}</code></pre>`;
+
+      document.getElementById("output").value = htmlFormatted.trim();
+
+      const preview = document.getElementById("preview");
+      preview.textContent = code;
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById("output");
+      output.select();
+      document.execCommand("copy");
+      alert("Formatted HTML copied to clipboard!");
+    }
+  </script>
+</body>
+</html>
